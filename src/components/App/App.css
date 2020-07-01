@@ -1,0 +1,7 @@
+.App_Nav ul {
+  display: flex;
+}
+
+.App_Nav ul li:nth-child(n + 2) {
+  margin-left: 16px;
+}
