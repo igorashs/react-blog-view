@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import HomePage from '../HomePage';
 import PostsPage from '../PostsPage';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { fetchPublishedPosts } from '../../lib/api';
 
 function App() {
-  // const [posts, setPosts] = useState(null);
+  const posts = usePosts();
 
   return (
     <Router>
@@ -24,15 +25,30 @@ function App() {
 
       <Switch>
         <Route path="/" exact>
-          <HomePage />
+          <HomePage posts={posts} />
         </Route>
         <Route path="/posts" exact>
-          <PostsPage />
+          <PostsPage posts={posts} />
         </Route>
         {/* <Route path="/post"><PostPage /></Route> */}
       </Switch>
     </Router>
   );
+}
+
+// fetch posts data and return posts state
+function usePosts() {
+  const [posts, setPosts] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const posts = await fetchPublishedPosts();
+
+      setPosts(posts);
+    })();
+  }, []);
+
+  return posts;
 }
 
 export default App;
