@@ -51,12 +51,20 @@ function usePosts() {
   const [posts, setPosts] = useState(null);
 
   useEffect(() => {
-    (async () => {
+    const fetch = async () => {
       const posts = await fetchPublishedPosts();
-      addTimestamps(posts);
-      sortByDate(posts);
-      setPosts(posts);
-    })();
+
+      if (!posts.error) {
+        addTimestamps(posts);
+        sortByDate(posts);
+        setPosts(posts);
+      } else {
+        console.error('Failed to fetch the data, Try to fetch again in 5sec');
+        setTimeout(fetch, 5000);
+      }
+    };
+
+    fetch();
   }, []);
 
   return posts;
@@ -67,19 +75,34 @@ function useIsOnline() {
   const [isOnline, setIsOnline] = useState(false);
 
   useEffect(() => {
-    (async () => {
+    const fetch = async () => {
       const status = await fetchServerStatus();
 
-      setIsOnline(status.error ? false : true);
-    })();
+      if (status.error) {
+        console.error('Failed connection to API, Try to reconnect in 10sec');
+        setIsOnline(false);
+        setTimeout(fetch, 10000);
+      } else {
+        setIsOnline(true);
+      }
+    };
+
+    fetch();
   });
 
   return isOnline;
 }
 
 // add timestamps to state array (which have date prop)
+// doesn't modify the state if it has an invalid type
 function addTimestamps(dataArr) {
-  dataArr.forEach((data) => (data.timestamp = moment(data.date).calendar()));
+  if (dataArr instanceof Array) {
+    dataArr.forEach((data) => {
+      if (data.date) {
+        return (data.timestamp = moment(data.date).calendar());
+      }
+    });
+  }
 }
 
 // sort the state array by date

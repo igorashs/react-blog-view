@@ -8,6 +8,10 @@ body {
   color: #fff;
 }
 
+a {
+  color: #00ffc3;
+}
+
 .App_Nav ul {
   display: flex;
 }
