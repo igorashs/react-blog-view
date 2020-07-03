@@ -30,7 +30,7 @@ function App() {
 
       <Switch>
         <Route path="/" exact>
-          <HomePage posts={posts} />
+          <HomePage posts={posts && posts.slice(0, 5)} />
         </Route>
         <Route path="/posts" exact>
           <PostsPage posts={posts} />
