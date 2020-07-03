@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import HomePage from '../HomePage';
 import PostsPage from '../PostsPage';
+import Status from './Status';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import { fetchPublishedPosts } from '../../lib/api';
+import { fetchPublishedPosts, fetchServerStatus } from '../../lib/api';
 
 function App() {
   const posts = usePosts();
+  const isOnline = useIsOnline();
 
   return (
     <Router>
@@ -14,13 +16,14 @@ function App() {
         <nav className="App_Nav">
           <ul>
             <li>
-              <Link to="/">Blog</Link>
+              <Link to="/">-Blog-</Link>
             </li>
             <li>
-              <Link to="/posts">Posts</Link>
+              <Link to="/posts">-Posts-</Link>
             </li>
           </ul>
         </nav>
+        <Status status={isOnline} />
       </header>
 
       <Switch>
@@ -49,6 +52,21 @@ function usePosts() {
   }, []);
 
   return posts;
+}
+
+// fetch server status
+function useIsOnline() {
+  const [isOnline, setIsOnline] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const status = await fetchServerStatus();
+
+      setIsOnline(status.message ? true : false);
+    })();
+  });
+
+  return isOnline;
 }
 
 export default App;

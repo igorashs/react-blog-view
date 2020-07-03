@@ -1,7 +1,38 @@
+:root {
+  --primary-color: #333;
+}
+
 .App_Nav ul {
   display: flex;
 }
 
 .App_Nav ul li:nth-child(n + 2) {
   margin-left: 16px;
+}
+
+.App_Nav a {
+  display: block;
+  padding: 0 8px;
+  color: white;
+  text-decoration: none;
+}
+
+.App_Nav a:hover {
+  background-color: #524d53;
+}
+
+.App_Header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+  background: var(--primary-color);
+  font-size: 32px;
+}
+
+.Offline {
+  color: #ff2f2f;
+}
+
+.Online {
+  color: #adff2f;
 }
