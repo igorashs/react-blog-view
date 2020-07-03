@@ -35,7 +35,7 @@ function App() {
         <Route path="/posts" exact>
           <PostsPage posts={posts} />
         </Route>
-        <Route path="/posts/:postId">
+        <Route path="/posts/:postId" exact>
           <PostPage />
         </Route>
       </Switch>
@@ -67,7 +67,7 @@ function useIsOnline() {
     (async () => {
       const status = await fetchServerStatus();
 
-      setIsOnline(status.message ? true : false);
+      setIsOnline(status.error ? false : true);
     })();
   });
 
