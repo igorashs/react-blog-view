@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import HomePage from '../HomePage';
 import PostsPage from '../PostsPage';
+import PostPage from '../PostPage';
 import Status from './Status';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { fetchPublishedPosts, fetchServerStatus } from '../../lib/api';
+import moment from 'moment';
 
 function App() {
   const posts = usePosts();
@@ -33,7 +35,9 @@ function App() {
         <Route path="/posts" exact>
           <PostsPage posts={posts} />
         </Route>
-        {/* <Route path="/post"><PostPage /></Route> */}
+        <Route path="/posts/:postId">
+          <PostPage />
+        </Route>
       </Switch>
     </Router>
   );
@@ -46,7 +50,8 @@ function usePosts() {
   useEffect(() => {
     (async () => {
       const posts = await fetchPublishedPosts();
-
+      addTimestamps(posts);
+      sortByDate(posts);
       setPosts(posts);
     })();
   }, []);
@@ -54,7 +59,7 @@ function usePosts() {
   return posts;
 }
 
-// fetch server status
+// fetch server status and return status state
 function useIsOnline() {
   const [isOnline, setIsOnline] = useState(false);
 
@@ -67,6 +72,26 @@ function useIsOnline() {
   });
 
   return isOnline;
+}
+
+// add timestamps to state array (which have date prop)
+function addTimestamps(dataArr) {
+  dataArr.forEach((data) => (data.timestamp = moment(data.date).calendar()));
+}
+
+// sort the state array by date
+function sortByDate(dataArr) {
+  dataArr.sort((a, b) => {
+    if (a.date > b.date) {
+      return -1;
+    }
+
+    if (a.date < b.date) {
+      return 1;
+    }
+
+    return 0;
+  });
 }
 
 export default App;

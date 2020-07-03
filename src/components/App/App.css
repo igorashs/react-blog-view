@@ -1,5 +1,11 @@
 :root {
   --primary-color: #333;
+  --secondary-color: #474747;
+}
+
+body {
+  background-color: var(--secondary-color);
+  color: #fff;
 }
 
 .App_Nav ul {
@@ -35,4 +41,8 @@
 
 .Online {
   color: #adff2f;
+}
+
+.Italic {
+  font-style: italic;
 }
