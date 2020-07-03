@@ -38,6 +38,9 @@ function App() {
         <Route path="/posts/:postId" exact>
           <PostPage />
         </Route>
+        <Route path="/">
+          <HomePage posts={posts} />
+        </Route>
       </Switch>
     </Router>
   );
