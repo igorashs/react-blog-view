@@ -6,9 +6,8 @@ import PropTypes from 'prop-types';
 export default function HomePage(props) {
   return (
     <div className="Container">
-      <NewestPost />
-      <RecentPostLists />
-      <p>{props.posts ? props.posts[0].title : 'Loading'}</p>
+      {props.posts && <NewestPost post={props.posts[0]} />}
+      {props.posts && <RecentPostLists posts={props.posts} />}
     </div>
   );
 }
