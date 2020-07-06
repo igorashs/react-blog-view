@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchPostCommentsWithId } from '../../lib/api';
-import moment from 'moment';
+import { addTimestamps } from '../../lib/helpers';
 
 export default function PostPage({ posts }) {
   const { postId } = useParams();
@@ -70,15 +70,3 @@ export default function PostPage({ posts }) {
 PostPage.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.object)
 };
-
-// add timestamps to state array (which have date prop)
-// doesn't modify the state if it has an invalid type
-function addTimestamps(dataArr) {
-  if (dataArr instanceof Array) {
-    dataArr.forEach((data) => {
-      if (data.date) {
-        return (data.timestamp = moment(data.date).calendar());
-      }
-    });
-  }
-}

@@ -6,7 +6,7 @@ import PostPage from '../PostPage';
 import Status from './Status';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { fetchPublishedPosts, fetchServerStatus } from '../../lib/api';
-import moment from 'moment';
+import { addTimestamps, sortByDate } from '../../lib/helpers';
 
 function App() {
   const posts = usePosts();
@@ -91,33 +91,6 @@ function useIsOnline() {
   });
 
   return isOnline;
-}
-
-// add timestamps to state array (which have date prop)
-// doesn't modify the state if it has an invalid type
-function addTimestamps(dataArr) {
-  if (dataArr instanceof Array) {
-    dataArr.forEach((data) => {
-      if (data.date) {
-        return (data.timestamp = moment(data.date).calendar());
-      }
-    });
-  }
-}
-
-// sort the state array by date
-function sortByDate(dataArr) {
-  dataArr.sort((a, b) => {
-    if (a.date > b.date) {
-      return -1;
-    }
-
-    if (a.date < b.date) {
-      return 1;
-    }
-
-    return 0;
-  });
 }
 
 export default App;
