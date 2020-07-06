@@ -15,13 +15,13 @@ export async function fetchPublishedPosts() {
 }
 
 export async function fetchPostWithId(id) {
-  const data = await fetch(`${API_URL}/posts/${id}`);
+  const data = await fetch(`${API_URL}posts/${id}/`);
 
   return await data.json();
 }
 
 export async function fetchPostCommentsWithId(id) {
-  const data = await fetch(`${API_URL}/posts/${id}/comments`);
+  const data = await fetch(`${API_URL}posts/${id}/comments/`);
 
   return await data.json();
 }
