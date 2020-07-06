@@ -36,7 +36,7 @@ function App() {
           <PostsPage posts={posts} />
         </Route>
         <Route path="/posts/:postId" exact>
-          <PostPage />
+          <PostPage posts={posts} />
         </Route>
         <Route path="/">
           <HomePage posts={posts} />
