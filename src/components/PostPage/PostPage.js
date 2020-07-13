@@ -1,38 +1,44 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { fetchPostCommentsWithId } from '../../lib/api';
+import { fetchPostCommentsWithId, postPostCommentWithId } from '../../lib/api';
 import { addTimestamps } from '../../lib/helpers';
+import { validateUsername, validateCommentText } from '../../lib/validator';
 
 export default function PostPage({ posts }) {
   const { postId } = useParams();
   const history = useHistory();
-  const [comments, setComments] = useState([]);
-  const [post, setPost] = useState(null);
+  const post = usePost(posts, postId, history);
+  const comments = useComments(post, postId);
+  const [userName, setUserName] = useState(null);
+  const [userComment, setUserComment] = useState(null);
+  const [userNameError, setUserNameError] = useState('');
+  const [userCommentError, setUserCommentError] = useState('');
+
+  function handleSubmit(e) {
+    console.log(userName);
+    e.preventDefault();
+  }
 
   useEffect(() => {
-    const post = posts && posts.find((p) => p._id === postId);
-    if (post) {
-      setPost(post);
-    } else {
-      history.push('/');
+    if (userName !== null) {
+      setUserNameError(validateUsername(userName));
     }
-  }, [postId, posts, history]);
+  }, [userName]);
 
   useEffect(() => {
-    const fetch = async () => {
-      if (post) {
-        const comments = await fetchPostCommentsWithId(postId);
+    if (userComment !== null) {
+      setUserCommentError(validateCommentText(userComment));
+    }
+  }, [userComment]);
 
-        if (!comments.error) {
-          addTimestamps(comments);
-        }
+  function handleUsernameChange(e) {
+    setUserName(e.currentTarget.value);
+  }
 
-        setComments(comments || []);
-      }
-    };
-    fetch();
-  }, [postId, post]);
+  function handleUserCommentChange(e) {
+    setUserComment(e.currentTarget.value);
+  }
 
   return !post ? null : (
     <article>
@@ -61,6 +67,27 @@ export default function PostPage({ posts }) {
               </li>
             ))}
           </ul>
+          <section>
+            <form onSubmit={handleSubmit}>
+              <label htmlFor="username">Username {userNameError}</label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={userName || ''}
+                onChange={handleUsernameChange}
+              />
+              <label htmlFor="text">Text {userCommentError}</label>
+              <textarea
+                type="text"
+                id="text"
+                name="text"
+                value={userComment || ''}
+                onChange={handleUserCommentChange}
+              ></textarea>
+              <button>Submit</button>
+            </form>
+          </section>
         </section>
       </footer>
     </article>
@@ -70,3 +97,41 @@ export default function PostPage({ posts }) {
 PostPage.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.object)
 };
+
+// get our state post by ID
+function usePost(posts, postId, history) {
+  const [post, setPost] = useState(null);
+
+  useEffect(() => {
+    const post = posts && posts.find((p) => p._id === postId);
+    if (post) {
+      setPost(post);
+    } else {
+      history.push('/');
+    }
+  }, [postId, posts, history]);
+
+  return post;
+}
+
+// Fetch post comments and return the state
+function useComments(post, postId) {
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    const fetch = async () => {
+      if (post) {
+        const comments = await fetchPostCommentsWithId(postId);
+
+        if (!comments.error) {
+          addTimestamps(comments);
+        }
+
+        setComments(comments || []);
+      }
+    };
+    fetch();
+  }, [postId, post]);
+
+  return comments;
+}
