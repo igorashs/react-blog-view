@@ -78,12 +78,12 @@ function useIsOnline() {
     const fetch = async () => {
       const status = await fetchServerStatus();
 
-      if (status.error) {
+      if (!status.error) {
+        setIsOnline(true);
+      } else {
         console.error('Failed connection to API, Try to reconnect in 10sec');
         setIsOnline(false);
         setTimeout(fetch, 10000);
-      } else {
-        setIsOnline(true);
       }
     };
 
