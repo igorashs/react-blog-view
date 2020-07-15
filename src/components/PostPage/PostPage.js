@@ -69,7 +69,9 @@ export default function PostPage({ posts }) {
           </ul>
           <section>
             <form onSubmit={handleSubmit}>
-              <label htmlFor="username">Username {userNameError}</label>
+              <label htmlFor="username" className={userNameError && 'Error'}>
+                Username {userNameError}
+              </label>
               <input
                 type="text"
                 id="username"
@@ -77,7 +79,9 @@ export default function PostPage({ posts }) {
                 value={userName || ''}
                 onChange={handleUsernameChange}
               />
-              <label htmlFor="text">Text {userCommentError}</label>
+              <label htmlFor="text" className={userCommentError && 'Error'}>
+                Text {userCommentError}
+              </label>
               <textarea
                 type="text"
                 id="text"

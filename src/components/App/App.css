@@ -39,7 +39,8 @@ a {
   font-size: 32px;
 }
 
-.Offline {
+.Offline,
+.Error {
   color: #ff2f2f;
 }
 
