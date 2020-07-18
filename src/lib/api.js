@@ -41,6 +41,12 @@ export async function fetchPostCommentsWithId(id) {
   }
 }
 
-export async function postPostCommentWithId(id, data) {
-  // TODO
+export async function postComment(data) {
+  await fetch(`${API_URL}posts/${data.post}/comments/new/`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  });
 }

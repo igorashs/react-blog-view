@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { fetchPostCommentsWithId, postPostCommentWithId } from '../../lib/api';
+import { fetchPostCommentsWithId, postComment } from '../../lib/api';
 import { addTimestamps } from '../../lib/helpers';
 import { validateUsername, validateCommentText } from '../../lib/validator';
 
@@ -15,9 +15,25 @@ export default function PostPage({ posts }) {
   const [userNameError, setUserNameError] = useState('');
   const [userCommentError, setUserCommentError] = useState('');
 
-  function handleSubmit(e) {
-    console.log(userName);
-    e.preventDefault();
+  async function handleSubmit(e) {
+    const userNameError = validateUsername(userName);
+    const userCommentError = validateCommentText(userComment);
+
+    if (userNameError || userCommentError) {
+      e.preventDefault();
+      setUserNameError(userNameError);
+      setUserCommentError(userCommentError);
+    } else {
+      try {
+        await postComment({
+          post: postId,
+          username: userName,
+          text: userComment
+        });
+      } catch (error) {
+        console.error('could not submit the comment');
+      }
+    }
   }
 
   useEffect(() => {
