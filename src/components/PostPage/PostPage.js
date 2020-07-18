@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchPostCommentsWithId, postComment } from '../../lib/api';
 import { addTimestamps } from '../../lib/helpers';
@@ -7,8 +7,7 @@ import { validateUsername, validateCommentText } from '../../lib/validator';
 
 export default function PostPage({ posts }) {
   const { postId } = useParams();
-  const history = useHistory();
-  const post = usePost(posts, postId, history);
+  const post = usePost(posts, postId);
   const comments = useComments(post, postId);
   const [userName, setUserName] = useState(null);
   const [userComment, setUserComment] = useState(null);
@@ -56,7 +55,9 @@ export default function PostPage({ posts }) {
     setUserComment(e.currentTarget.value);
   }
 
-  return !post ? null : (
+  return !post ? (
+    <h3>No Data Found :C</h3>
+  ) : (
     <article>
       <header>
         <h1>
@@ -119,17 +120,15 @@ PostPage.propTypes = {
 };
 
 // get our state post by ID
-function usePost(posts, postId, history) {
+function usePost(posts, postId) {
   const [post, setPost] = useState(null);
 
   useEffect(() => {
     const post = posts && posts.find((p) => p._id === postId);
     if (post) {
       setPost(post);
-    } else {
-      history.push('/');
     }
-  }, [postId, posts, history]);
+  }, [postId, posts]);
 
   return post;
 }
