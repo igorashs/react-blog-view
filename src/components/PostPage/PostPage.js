@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { fetchPostCommentsWithId, postComment } from '../../lib/api';
 import { addTimestamps } from '../../lib/helpers';
 import { validateUsername, validateCommentText } from '../../lib/validator';
+import Loading from '../Loading';
 
 export default function PostPage({ posts }) {
   const { postId } = useParams();
@@ -56,7 +57,7 @@ export default function PostPage({ posts }) {
   }
 
   return !post ? (
-    <h3>No Data Found :C</h3>
+    <Loading />
   ) : (
     <article>
       <header>

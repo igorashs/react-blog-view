@@ -2,12 +2,15 @@ import React from 'react';
 import NewestPost from './NewestPost';
 import RecentPostLists from './RecentPostList';
 import PropTypes from 'prop-types';
+import Loading from '../Loading';
 
-export default function HomePage(props) {
-  return (
+export default function HomePage({ posts }) {
+  return !posts ? (
+    <Loading />
+  ) : (
     <div className="Container">
-      {props.posts && <NewestPost post={props.posts[0]} />}
-      {props.posts && <RecentPostLists posts={props.posts} />}
+      <NewestPost post={posts[0]} />
+      <RecentPostLists posts={posts} />
     </div>
   );
 }

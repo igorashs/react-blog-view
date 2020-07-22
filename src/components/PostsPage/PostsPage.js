@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Loading from '../Loading';
 
 export default function PostsPage({ posts }) {
   return !posts ? (
-    <h3>No Data Found :C</h3>
+    <Loading />
   ) : (
     <ul>
       {posts.map((post) => (
