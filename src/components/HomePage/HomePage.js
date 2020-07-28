@@ -8,7 +8,7 @@ export default function HomePage({ posts }) {
   return !posts ? (
     <Loading />
   ) : (
-    <div className="Container">
+    <div className="HomePage">
       <NewestPost post={posts[0]} />
       <RecentPostLists posts={posts} />
     </div>

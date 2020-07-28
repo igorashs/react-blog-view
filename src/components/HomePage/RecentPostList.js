@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 export default function RecentPostList({ posts }) {
   return (
-    <aside>
+    <aside className="PostLists">
       <header>
         <h2>Recent Posts</h2>
       </header>
@@ -12,9 +12,9 @@ export default function RecentPostList({ posts }) {
         <ul>
           {posts &&
             posts.map((post) => (
-              <li key={post._id}>
+              <li className="PostListItem" key={post._id}>
                 <Link to={`/posts/${post._id}`}>
-                  <article>
+                  <article className="RecentPost">
                     <h3>{post.title}</h3>
                     <p>{post.timestamp}</p>
                   </article>

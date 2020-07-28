@@ -59,34 +59,39 @@ export default function PostPage({ posts }) {
   return !post ? (
     <Loading />
   ) : (
-    <article>
+    <article className="PostPage">
       <header>
         <h1>
-          New: <span className="Italic">{post.title}</span>
+          <span className="Italic">{post.title}</span>
+          <p className="Date">Posted: {post.timestamp}</p>
         </h1>
       </header>
-      <section>
+      <section className="PostText">
         <p>{post.text}</p>
       </section>
       <footer>
-        <p>Date: {post.timestamp}</p>
-        <section>
+        <section className="PostComments">
           <h2>Comments</h2>
           <ul>
             {comments.map((c) => (
               <li key={c._id}>
-                <article>
+                <article className="PostComment">
                   <h3>{c.username}</h3>
                   <div>
-                    <p>{c.text}</p>
-                    <p>{c.timestamp}</p>
+                    <p className="CommentText">{c.text}</p>
+                    <p className="CommentDate">{c.timestamp}</p>
                   </div>
                 </article>
               </li>
             ))}
           </ul>
-          <section>
-            <form onSubmit={handleSubmit}>
+          <section className="CommentFormSection">
+            <form
+              className={`CommentForm ${
+                (userNameError || userCommentError) && 'FormError'
+              }`}
+              onSubmit={handleSubmit}
+            >
               <label htmlFor="username" className={userNameError && 'Error'}>
                 Username {userNameError}
               </label>
@@ -107,7 +112,7 @@ export default function PostPage({ posts }) {
                 value={userComment || ''}
                 onChange={handleUserCommentChange}
               ></textarea>
-              <button>Submit</button>
+              <button>Add Comment</button>
             </form>
           </section>
         </section>

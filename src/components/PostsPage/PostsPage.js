@@ -7,18 +7,20 @@ export default function PostsPage({ posts }) {
   return !posts ? (
     <Loading />
   ) : (
-    <ul>
-      {posts.map((post) => (
-        <li key={post._id}>
-          <Link to={`/posts/${post._id}`}>
-            <article>
-              <h3>{post.title}</h3>
-              <p>{post.timestamp}</p>
-            </article>
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <div className="PostsPage">
+      <ul>
+        {posts.map((post) => (
+          <li className="PostListItem" key={post._id}>
+            <Link to={`/posts/${post._id}`}>
+              <article>
+                <h3>{post.title}</h3>
+                <p>{post.timestamp}</p>
+              </article>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 

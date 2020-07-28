@@ -41,7 +41,11 @@ a {
 
 .Offline,
 .Error {
-  color: #ff2f2f;
+  color: #d25454;
+}
+
+.FormError {
+  box-shadow: 1px 1px 1px 1px #d25454 !important;
 }
 
 .Online {
@@ -50,4 +54,14 @@ a {
 
 .Italic {
   font-style: italic;
+}
+
+.PostListItem {
+  margin-bottom: 8px;
+  padding: 8px;
+  box-shadow: 1px 1px 1px 1px #6e886d;
+}
+
+.PostListItem:hover {
+  background-color: rgba(0, 0, 0, 0.2);
 }

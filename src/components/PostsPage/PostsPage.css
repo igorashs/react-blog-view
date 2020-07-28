@@ -1,0 +1,7 @@
+.PostsPage {
+  margin: 8px;
+}
+
+.PostsPage .PostListItem h3 {
+  font-size: 20px;
+}
