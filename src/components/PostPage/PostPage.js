@@ -28,7 +28,8 @@ export default function PostPage({ posts }) {
         await postComment({
           post: postId,
           username: userName,
-          text: userComment
+          text: userComment,
+          date: new Date()
         });
       } catch (error) {
         console.error('could not submit the comment');
