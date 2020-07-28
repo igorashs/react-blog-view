@@ -13,7 +13,11 @@ export default function PostsPage({ posts }) {
           <li className="PostListItem" key={post._id}>
             <Link to={`/posts/${post._id}`}>
               <article>
-                <h3>{post.title}</h3>
+                <h3>
+                  {post.title.length > 200
+                    ? `${post.title.slice(0, 200)}...`
+                    : post.title}
+                </h3>
                 <p>{post.timestamp}</p>
               </article>
             </Link>

@@ -15,7 +15,11 @@ export default function RecentPostList({ posts }) {
               <li className="PostListItem" key={post._id}>
                 <Link to={`/posts/${post._id}`}>
                   <article className="RecentPost">
-                    <h3>{post.title}</h3>
+                    <h3>
+                      {post.title.length > 80
+                        ? `${post.title.slice(0, 80)}...`
+                        : post.title}
+                    </h3>
                     <p>{post.timestamp}</p>
                   </article>
                 </Link>

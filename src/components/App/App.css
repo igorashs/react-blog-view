@@ -27,16 +27,22 @@ a {
   text-decoration: none;
 }
 
-.App_Nav a:hover {
+.App_Nav a:hover,
+.App_Nav a:focus {
   background-color: #524d53;
 }
 
 .App_Header {
   display: flex;
+  position: sticky;
   justify-content: space-between;
   padding: 0 16px;
+  left: 0;
+  right: 0;
+  top: 0;
   background: var(--primary-color);
   font-size: 32px;
+  z-index: 6969;
 }
 
 .Offline,
@@ -62,6 +68,13 @@ a {
   box-shadow: 1px 1px 1px 1px #6e886d;
 }
 
-.PostListItem:hover {
+.PostListItem:hover,
+.PostListItem:focus {
   background-color: rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 500px) {
+  .App_Header {
+    font-size: 20px;
+  }
 }

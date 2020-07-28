@@ -21,10 +21,11 @@
 }
 
 .NewestPost footer {
-  margin: -8px;
   position: absolute;
+  left: -8px;
+  right: -8px;
   bottom: 0;
-  width: 100%;
+  /* width: 100%; */
   height: 80px;
   background: linear-gradient(180deg, transparent, #a7a7a7);
 }
@@ -63,4 +64,17 @@
 
 .RecentPost p {
   text-align: right;
+}
+
+@media (max-width: 1280px) {
+  .HomePage {
+    grid-template-columns: auto;
+    row-gap: 16px;
+  }
+}
+
+@media (max-width: 500px) {
+  .NewestPost header {
+    font-size: 25px;
+  }
 }

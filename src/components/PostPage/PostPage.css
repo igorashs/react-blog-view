@@ -76,3 +76,9 @@
   height: 120px;
   resize: none;
 }
+
+@media (max-width: 500px) {
+  .PostPage h1 {
+    font-size: 35px;
+  }
+}
