@@ -73,19 +73,23 @@ export default function PostPage({ posts }) {
       <footer>
         <section className="PostComments">
           <h2>Comments</h2>
-          <ul>
-            {comments.map((c) => (
-              <li key={c._id}>
-                <article className="PostComment">
-                  <h3>{c.username}</h3>
-                  <div>
-                    <p className="CommentText">{c.text}</p>
-                    <p className="CommentDate">{c.timestamp}</p>
-                  </div>
-                </article>
-              </li>
-            ))}
-          </ul>
+          {comments.length > 0 ? (
+            <ul>
+              {comments.map((c) => (
+                <li key={c._id}>
+                  <article className="PostComment">
+                    <h3>{c.username}</h3>
+                    <div>
+                      <p className="CommentText">{c.text}</p>
+                      <p className="CommentDate">{c.timestamp}</p>
+                    </div>
+                  </article>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            'No Comments'
+          )}
           <section className="CommentFormSection">
             <form
               className={`CommentForm ${
@@ -151,9 +155,10 @@ function useComments(post, postId) {
 
         if (!comments.error) {
           addTimestamps(comments);
+          setComments(comments);
+        } else {
+          setComments([]);
         }
-
-        setComments(comments || []);
       }
     };
     fetch();
