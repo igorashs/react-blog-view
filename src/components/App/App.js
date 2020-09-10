@@ -4,7 +4,7 @@ import HomePage from '../HomePage';
 import PostsPage from '../PostsPage';
 import PostPage from '../PostPage';
 import Status from './Status';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { HashRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { fetchPublishedPosts, fetchServerStatus } from '../../lib/api';
 import { addTimestamps, sortByDate } from '../../lib/helpers';
 
@@ -13,7 +13,7 @@ function App() {
   const isOnline = useIsOnline();
 
   return (
-    <Router basename="/react-blog-view">
+    <Router basename="/">
       <header className="App_Header">
         <nav className="App_Nav">
           <ul>
