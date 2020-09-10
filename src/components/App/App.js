@@ -13,7 +13,7 @@ function App() {
   const isOnline = useIsOnline();
 
   return (
-    <Router>
+    <Router basename="/react-blog-view">
       <header className="App_Header">
         <nav className="App_Nav">
           <ul>
